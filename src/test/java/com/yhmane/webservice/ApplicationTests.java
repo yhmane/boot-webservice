@@ -1,4 +1,4 @@
-package com.yhmane.springwebservice;
+package com.yhmane.webservice;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
