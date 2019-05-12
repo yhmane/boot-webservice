@@ -14,12 +14,11 @@ cache:
 
 script: "./gradlew clean build"
 
-# CI 실행 완료시 메일로 알람
-notifications:
-  email:
-    recipients:
-      - hwang9yh@gmail.com
-      - hwang9yh@naver.com
+before_deploy:
+  - zip -r boot-webservice *
+  - mkdir -p deploy
+  - mv boot-webservice.zip deploy/boot-webservice.zip
+
 
 deploy:
   - provider: s3
@@ -29,7 +28,16 @@ deploy:
     region: ap-northeast-2
     skip_cleanup: true
     acl: public_read
+    local_dir: deploy # before_deploy에서 생성한 디렉토리
     wait-until-deployed: true
     on:
-      repo: yhmane/boot-webservice
+      repo: yhmane/boot-webservice #Github 주소
       branch: master
+
+
+# CI 실행 완료시 메일로 알람
+notifications:
+  email:
+    recipients:
+      - hwang9yh@gmail.com
+      - hwang9yh@naver.com
